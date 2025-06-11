@@ -1,0 +1,12 @@
+# telegram_bot/handlers.py
+from telegram.ext import CommandHandler
+
+def start(update, context):
+    user = update.effective_user
+    TelegramUser.objects.update_or_create(
+        chat_id=update.message.chat_id,
+        defaults={'username': user.username}
+    )
+    update.message.reply_text("You've been registered!")
+
+handlers = [CommandHandler('start', start)]
